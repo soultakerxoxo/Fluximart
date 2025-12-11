@@ -1,0 +1,36 @@
+<% layout('layout') -%>
+<section class="checkout">
+  <h1>Checkout</h1>
+  <div class="checkout-grid">
+    <div class="preview">
+      <img src="<%= img.url %>" alt="<%= img.title %>" />
+      <div class="title"><%= img.title %></div>
+      <div class="price">$<%= img.price %></div>
+    </div>
+    <div class="pay">
+      <form method="post" action="/pay" class="pay-form">
+        <input type="hidden" name="imageId" value="<%= img.id %>" />
+        <label>Payment Method</label>
+        <select name="method">
+          <option value="paypal">PayPal</option>
+          <option value="card">Credit/Debit Card</option>
+        </select>
+        <div class="merchant">
+          <div>
+            <label>Your PayPal (admin)</label>
+            <input type="text" value="<%= merchantSettings.paypalEmail %>" placeholder="Admin PayPal (set in Admin > Settings)" readonly />
+          </div>
+          <div>
+            <label>Your Card Number (admin)</label>
+            <input type="text" value="<%= merchantSettings.cardNumber %>" placeholder="Admin Card (set in Admin > Settings)" readonly />
+          </div>
+        </div>
+        <label>Buyer Email</label>
+        <input type="email" name="buyerEmail" placeholder="you@example.com" required />
+        <label>SMS Phone</label>
+        <input type="tel" name="phone" placeholder="+1234567890" required />
+        <button class="button">Pay $<%= img.price %></button>
+      </form>
+    </div>
+  </div>
+</section>

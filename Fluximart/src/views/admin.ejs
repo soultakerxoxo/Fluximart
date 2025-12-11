@@ -1,0 +1,97 @@
+<% layout('layout') -%>
+<section class="admin">
+  <h1>Admin AI Control Panel</h1>
+  <div class="admin-grid">
+    <div class="panel">
+      <h2>Daily Generation</h2>
+      <form method="post" action="/admin/generate">
+        <button class="button">Generate Now</button>
+      </form>
+      <div class="list">
+        <% latest.forEach(function(img){ %>
+          <div class="row">
+            <img src="<%= img.url %>" alt="<%= img.title %>" />
+            <div class="meta">
+              <div class="title"><%= img.title %></div>
+              <div class="tags"><%= img.tags.join(' • ') %></div>
+              <div class="price">$<%= img.price %></div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Trend Monitoring Logs</h2>
+      <div class="list">
+        <% logs.forEach(function(l){ %>
+          <div class="row">
+            <div class="meta">
+              <div class="title"><%= l.timestamp.toLocaleString() %></div>
+              <div class="tags"><%= l.sources.join(' • ') %></div>
+              <div class="tags"><%= l.topics.join(' • ') %></div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Social Auto-Posting</h2>
+      <form method="post" action="/admin/social" class="social-form">
+        <label><input type="checkbox" name="instagram" <%= socialSettings.instagram ? 'checked' : '' %> /> Instagram</label>
+        <label><input type="checkbox" name="facebook" <%= socialSettings.facebook ? 'checked' : '' %> /> Facebook</label>
+        <label><input type="checkbox" name="tiktok" <%= socialSettings.tiktok ? 'checked' : '' %> /> TikTok</label>
+        <label><input type="checkbox" name="pinterest" <%= socialSettings.pinterest ? 'checked' : '' %> /> Pinterest</label>
+        <label><input type="checkbox" name="twitter" <%= socialSettings.twitter ? 'checked' : '' %> /> X/Twitter</label>
+        <button class="button">Save</button>
+      </form>
+    </div>
+    <div class="panel">
+      <h2>Merchant Settings</h2>
+      <form method="post" action="/admin/settings" class="settings-form">
+        <label>PayPal Email</label>
+        <input type="email" name="paypalEmail" value="<%= merchantSettings.paypalEmail %>" placeholder="your-paypal@example.com" />
+        <label>Card Number</label>
+        <input type="text" name="cardNumber" value="<%= merchantSettings.cardNumber %>" placeholder="1234 5678 9012 3456" />
+        <label>SMS Number</label>
+        <input type="tel" name="smsNumber" value="<%= merchantSettings.smsNumber %>" placeholder="+1234567890" />
+        <button class="button">Save</button>
+      </form>
+    </div>
+    <div class="panel">
+      <h2>Sales Charts</h2>
+      <div class="charts">
+        <div>
+          <h3>By Day</h3>
+          <div class="bar-chart">
+            <% Object.keys(summary.byDay).sort().forEach(function(day){ %>
+              <% const v = summary.byDay[day].total; %>
+              <div class="bar-row"><span class="label"><%= day %></span><span class="bar" style="width:<%= Math.min(100, v*4) %>px"></span><span class="value">$<%= v %></span></div>
+            <% }) %>
+          </div>
+        </div>
+        <div>
+          <h3>By Method</h3>
+          <div class="bar-chart">
+            <% Object.keys(summary.byMethod).forEach(function(m){ %>
+              <% const v = summary.byMethod[m].total; %>
+              <div class="bar-row"><span class="label"><%= m %></span><span class="bar" style="width:<%= Math.min(100, v*4) %>px"></span><span class="value">$<%= v %></span></div>
+            <% }) %>
+          </div>
+        </div>
+      </div>
+      <h3>Recent Sales</h3>
+      <div class="list">
+        <% salesRecent.forEach(function(s){ %>
+          <div class="row">
+            <% const i = latest.find(function(x){ return x.id === s.imageId }) %>
+            <img src="<%= i ? i.url : '' %>" alt="" />
+            <div class="meta">
+              <div class="title">$<%= s.price %> • <%= s.method %></div>
+              <div class="tags"><%= s.timestamp.toLocaleString() %></div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</section>

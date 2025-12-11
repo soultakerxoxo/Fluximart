@@ -1,0 +1,10 @@
+<% layout('layout') -%>
+<section class="checkout">
+  <h1>Payment Successful</h1>
+  <p>Thank you. Your payment of $<%= sale.price %> has been recorded.</p>
+  <div class="preview">
+    <img src="<%= img.url %>" alt="<%= img.title %>" />
+    <div class="title"><%= img.title %></div>
+  </div>
+  <a class="button" href="/image/<%= img.id %>">Back to Image</a>
+</section>
