@@ -1,0 +1,36 @@
+{
+  "name": "fluximart-snapstockx",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Fluximart with SnapStockX — AI-powered stock image marketplace",
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push",
+    "prisma:seed": "node --loader ts-node/esm prisma/seed.ts"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "next": "14.2.8",
+    "next-auth": "^4.24.7",
+    "@next-auth/prisma-adapter": "^1.0.7",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "@prisma/client": "^5.19.1",
+    "clsx": "^2.1.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.2.8",
+    "postcss": "^8.4.33",
+    "tailwindcss": "^3.4.13",
+    "autoprefixer": "^10.4.20",
+    "prisma": "^5.19.1",
+    "ts-node": "^10.9.2"
+  }
+}
